@@ -14,8 +14,8 @@ const config = {
     idleTimeoutMillis: 30000
   },
   options: {
-    encrypt: true,
-    trusServerCertificate: true
+    //encrypt: true,
+    trustServerCertificate: true
   }
 };
 
