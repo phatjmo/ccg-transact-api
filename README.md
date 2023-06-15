@@ -18,20 +18,23 @@ This guide outlines the steps required to deploy the application behind an Nginx
 First, you will need to install Node.js on your Ubuntu server. You can do this with the following commands:
 
 ```bash
-curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+# Ubuntu 22.04 has Node 12 so we need to use the node source method to get something more current
+curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 sudo apt-get install -y nodejs
-
-# Ubuntu 22.04
-sudo apt install -y nodejs
 ```
 
 2. **Clone the application**
 
-Next, clone your application to your server:
+Next, clone your application to your server (requires a [deploy key!](https://docs.github.com/v3/guides/managing-deploy-keys/#deploy-keys)):
 
 ```bash
-git clone <your repo url>
-cd <your repo directory>
+# Generate Deploy Key
+ssh-keygen # Answer the prompts
+cat ~/.ssh/id_rsa.pub # then put your public key into repository settings
+
+# Now you're ready to clone
+git clone git@github.com:phatjmo/ccg-transact-api.git
+cd ccg-transact-api
 npm install
 ```
 
@@ -62,8 +65,8 @@ Then follow the instruction to run the generated command.
 Install Nginx using Ubuntu's package manager:
 
 ```bash
-sudo apt-get update
-sudo apt-get install nginx
+sudo apt update
+sudo apt install nginx
 ```
 
 5. **Configure Nginx**
@@ -71,7 +74,7 @@ sudo apt-get install nginx
 Now you will configure Nginx to reverse proxy to your application. Open a new Nginx configuration file in a text editor:
 
 ```bash
-sudo nano /etc/nginx/sites-available/myapp
+sudo vim /etc/nginx/sites-available/ccg-transact-api
 ```
 
 And add the following configuration:
@@ -97,19 +100,17 @@ Replace `yourdomain.com` with your domain name, and make sure the `proxy_pass` d
 Save and exit the text editor. Enable the new configuration by creating a symlink to the `sites-enabled` directory:
 
 ```bash
-sudo ln -s /etc/nginx/sites-available/myapp /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/ccg-transact-api /etc/nginx/sites-enabled/
 ```
 
 6. **Install Certbot**
 
-Certbot is a tool that automates getting and installing SSL certificates with Let's Encrypt. You can install it with the following commands:
-
+Certbot is a tool that automates getting and installing SSL certificates with Let's Encrypt. You can install it with the following commands (Ref: https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-22-04)
+# Ubuntu 22.04
 ```bash
-sudo apt-get install software-properties-common
-sudo add-apt-repository universe
-sudo add-apt-repository ppa:certbot/certbot
-sudo apt-get update
-sudo apt-get install certbot python-certbot-nginx 
+sudo snap install core; sudo snap refresh core
+sudo snap install --classic certbot
+sudo ln -s /snap/bin/certbot /usr/bin/certbot
 ```
 
 7. **Configure SSL**
@@ -117,14 +118,18 @@ sudo apt-get install certbot python-certbot-nginx
 Finally, you can configure SSL for your domain with the following command:
 
 ```bash
-sudo certbot --nginx -d yourdomain.com
+# Verify nginx config first:
+sudo nginx -t
+# Now run certbot
+sudo certbot --nginx -d yourdomain.com -v
+# Verify auto-renewal
+sudo systemctl status snap.certbot.renew.service
+# Test
+sudo certbot renew --dry-run
 ```
 
 Replace `yourdomain.com` with your domain name. Follow the on-screen prompts, and certbot will automatically configure Nginx to use SSL with your new certificate.
 
-Sure, here's a suggestion for that section in your README:
-
----
 
 ## API Key Authentication
 
@@ -165,3 +170,12 @@ npm run generate-key
 This will generate a new, 32-character long API key and print it out. Copy the generated key and add it to your `keys.json` file.
 
 Remember to treat these keys as sensitive data, and be careful not to expose them publicly.
+
+
+## Updating the service
+
+Current releases should be in the main branch, so just pull the latest changes and restart the service.
+
+```bash
+git pull
+```

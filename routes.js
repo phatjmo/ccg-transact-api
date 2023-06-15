@@ -11,7 +11,6 @@ function routes(fastify, options, done) {
           phoneNo: { type: 'string' },
           accountNo: { type: 'string' },
           leadID: { type: 'string' },
-          amount: { type: 'number' },
           creditCardNo: { type: 'string' },
           creditCardExp: { type: 'string' },
         },
@@ -24,7 +23,6 @@ function routes(fastify, options, done) {
       phoneNo,
       accountNo,
       leadID,
-      amount,
       creditCardNo,
       creditCardExp,
     } = request.body;
@@ -54,7 +52,6 @@ function routes(fastify, options, done) {
           phoneNo: { type: 'string' },
           accountNo: { type: 'string' },
           leadID: { type: 'string' },
-          amount: { type: 'number' },
           achRoutingNo: { type: 'string' },
           achAccountNo: { type: 'string' },
         },
@@ -67,7 +64,6 @@ function routes(fastify, options, done) {
       phoneNo,
       accountNo,
       leadID,
-      amount,
       achRoutingNo,
       achAccountNo,
     } = request.body;
