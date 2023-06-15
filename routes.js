@@ -1,4 +1,4 @@
-const { sql, poolPromise } = require('./mssql-datasource');
+const { storeTransactACH, storeTransactCC } = require('./mssql-datasource');
 const { validateCreditCardNumber, validateABARoutingNumber } = require('./helpers')
 function routes(fastify, options, done) {
   
@@ -36,15 +36,7 @@ function routes(fastify, options, done) {
     }
 
     try {
-      const pool = await poolPromise;
-      const result = await pool.request()
-        .input('phone', sql.NVarChar(10), phoneNo)
-        .input('account', sql.NVarChar(256), accountNo)
-        .input('leadid', sql.Int, leadID)
-        .input('ccnumber', sql.NVarChar(16), creditCardNo)
-        .input('ccexp', sql.NVarChar(4), creditCardExp)
-        .execute('dbo.TransactCreditCard');
-      
+      await storeTransactCC(phoneNo, accountNo, leadID, creditCardNo, creditCardExp)
       // Depending on your stored procedure's response, you may want to send specific messages or status codes
       reply.send({ message: 'Transaction stored successfully.' });
       
@@ -87,15 +79,7 @@ function routes(fastify, options, done) {
     }
 
     try {
-      const pool = await poolPromise;
-      const result = await pool.request()
-        .input('phone', sql.NVarChar(10), phoneNo)
-        .input('account', sql.NVarChar(256), accountNo)
-        .input('leadid', sql.Int, leadID)
-        .input('achroute', sql.NVarChar(9), achRoutingNo)
-        .input('achaccount', sql.NVarChar(17), achAccountNo)
-        .execute('dbo.TransactACH');
-
+      await storeTransactACH(phoneNo, accountNo, leadID, achRoutingNo, achAccountNo)
       reply.send({ message: 'Transaction stored successfully.' });
 
     } catch (err) {
