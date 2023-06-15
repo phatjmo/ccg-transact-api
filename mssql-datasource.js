@@ -8,6 +8,15 @@ const config = {
   password: env.MSSQL_PASSWORD || 'your_password',
   server: env.MSSQL_HOST || 'localhost',
   database: env.MSSQL_DB || 'your_database',
+  pool: {
+    max: 10,
+    min: 0,
+    idleTimeoutMillis: 30000
+  },
+  options: {
+    encrypt: true,
+    trusServerCertificate: true
+  }
 };
 
 const poolPromise = new sql.ConnectionPool(config)
