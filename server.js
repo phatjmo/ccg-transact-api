@@ -2,25 +2,25 @@ const fastify = require('fastify')({ logger: true })
 const routes = require('./routes');
 const keys = require('./keys.json');
 
-fastify.addHook('onRequest', async (request, reply) => {
-  if (request.routerPath === '/') return // Root is our healthcheck
-  // Try to get the API key from the header first
-  let apiKey = request.headers['x-api-key'];
+// fastify.addHook('onRequest', async (request, reply) => {
+//   if (request.routerMethod === 'GET') return // Root is our healthcheck
+//   // Try to get the API key from the header first
+//   let apiKey = request.headers['x-api-key'];
 
-  // If not found, try to get it from the query string
-  if (!apiKey) {
-    apiKey = request.query['x-api-key'];
-  }
+//   // If not found, try to get it from the query string
+//   if (!apiKey) {
+//     apiKey = request.query['x-api-key'];
+//   }
 
-  // If the API key is still not found or doesn't match any key in your list, reject the request
-  if (!apiKey || !keys.keys.includes(apiKey)) {
-    reply.code(401).send({ message: 'Invalid API Key' });
-  }
-});
+//   // If the API key is still not found or doesn't match any key in your list, reject the request
+//   if (!apiKey || !keys.keys.includes(apiKey)) {
+//     reply.code(401).send({ message: 'Invalid API Key' });
+//   }
+// });
 
 fastify.register(routes);
 
-fastify.get('/', async (request, reply) => {
+fastify.get('/*', async (request, reply) => {
   return { hello: 'world' }
 })
 

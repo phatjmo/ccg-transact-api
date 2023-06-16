@@ -1,5 +1,5 @@
 const { storeTransactACH, storeTransactCC } = require('./mssql-datasource');
-const { validateCreditCardNumber, validateABARoutingNumber } = require('./helpers')
+const { validateCreditCardNumber, validateABARoutingNumber, checkAPIKey } = require('./helpers')
 function routes(fastify, options, done) {
 
   // Credit Card Transaction Route
@@ -18,6 +18,8 @@ function routes(fastify, options, done) {
       }
     },
   }, async (request, reply) => {
+    // Secure Route: Check API Key
+    checkAPIKey(request, reply)
     // Implementation of your route
     const {
       phoneNo,
@@ -59,6 +61,8 @@ function routes(fastify, options, done) {
       }
     },
   }, async (request, reply) => {
+    // Secure Route: Check API Key
+    checkAPIKey(request, reply)
     // Implementation of your route
     const {
       phoneNo,

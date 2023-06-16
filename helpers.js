@@ -1,3 +1,5 @@
+const keys = require('./keys.json');
+
 function validateCreditCardNumber(cardNumber) {
   let nums = Array.from(cardNumber, Number);
   for (let i = nums.length - 2; i >= 0; i -= 2) {
@@ -45,7 +47,23 @@ function validateABARoutingNumber(routingNumber) {
   return (10 - (sum % 10)) % 10 === parseInt(routing[8]);
 }
 
+const checkAPIKey = (request, reply) => {
+   // Try to get the API key from the header first
+   let apiKey = request.headers['x-api-key'];
+
+   // If not found, try to get it from the query string
+   if (!apiKey) {
+     apiKey = request.query['x-api-key'];
+   }
+ 
+   // If the API key is still not found or doesn't match any key in your list, reject the request
+   if (!apiKey || !keys.keys.includes(apiKey)) {
+     reply.code(401).send({ message: 'Invalid API Key' });
+   }
+}
+
 module.exports = {
   validateCreditCardNumber,
   validateABARoutingNumber,
+  checkAPIKey
 }
