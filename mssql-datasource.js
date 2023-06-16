@@ -1,20 +1,21 @@
 const sql = require('mssql');
-require('dotenv').config()
+const { mssqlConfig } = require('./config')
 
-const env = process.env
+const { user, password, server, database } = mssqlConfig
+// console.log(`${user}:${password} -> ${server}/${database}`)
 
 const config = {
-  user: env.MSSQL_USER || 'your_user',
-  password: env.MSSQL_PASSWORD || 'your_password',
-  server: env.MSSQL_HOST || 'localhost',
-  database: env.MSSQL_DB || 'your_database',
+  user,
+  password,
+  server,
+  database,
   pool: {
     max: 10,
     min: 0,
     idleTimeoutMillis: 30000
   },
   options: {
-    //encrypt: true,
+    encrypt: true,
     trustServerCertificate: true
   }
 };
@@ -29,6 +30,9 @@ const poolPromise = new sql.ConnectionPool(config)
 
 const storeTransactACH = async (phoneNo, accountNo, leadID, achRoutingNo, achAccountNo) => {
   const pool = await poolPromise;
+  //let pool = await sql.connect(config)
+  //let pool = await sql.connect(`Server=${server},1433;Database=${database};User Id=${user};Password=${password};Encrypt=true`)
+  
   return await pool.request()
     .input('phone', sql.NVarChar(10), phoneNo)
     .input('account', sql.NVarChar(256), accountNo)
