@@ -47,5 +47,5 @@ function validateABARoutingNumber(routingNumber) {
 
 module.exports = {
   validateCreditCardNumber,
-  validateABARoutingNumber
+  validateABARoutingNumber,
 }

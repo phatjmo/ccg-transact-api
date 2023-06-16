@@ -3,6 +3,7 @@ const routes = require('./routes');
 const keys = require('./keys.json');
 
 fastify.addHook('onRequest', async (request, reply) => {
+  if (request.routerPath === '/') return // Root is our healthcheck
   // Try to get the API key from the header first
   let apiKey = request.headers['x-api-key'];
 

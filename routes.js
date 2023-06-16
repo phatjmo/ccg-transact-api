@@ -1,7 +1,7 @@
 const { storeTransactACH, storeTransactCC } = require('./mssql-datasource');
 const { validateCreditCardNumber, validateABARoutingNumber } = require('./helpers')
 function routes(fastify, options, done) {
-  
+
   // Credit Card Transaction Route
   fastify.post('/api/transactions/creditcard', {
     schema: {

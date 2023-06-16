@@ -60,6 +60,8 @@ pm2 startup
 
 Then follow the instruction to run the generated command.
 
+Note: Ensure logging is in /var/log using pm2-logrotate: https://pm2.keymetrics.io/docs/usage/log-management/
+
 4. **Install Nginx**
 
 Install Nginx using Ubuntu's package manager:
