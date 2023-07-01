@@ -1,0 +1,23 @@
+# This file requires the VSCode REST Client extension to be installed.
+# dotenv variables require the .env file to be in the same directory as this file.
+# For debugging, rest-client.previewOption should be set to exchange to see request/response headers.
+
+# Variables
+@baseUrl = {{$dotenv BASE_URL}}
+@apiKey = {{$dotenv API_KEY}}
+
+# POST with x-api-key header
+POST {{baseUrl}}/api/transactions/creditcard
+content-type: application/json
+x-api-key: {{apiKey}}
+
+
+    {
+        "phoneNo": "4805551212",
+        "accountNo": "6112fd5867302f001e204701",
+        "leadID": "12345",
+        "creditCardNo": "4532015112830366",
+        "creditCardExp": "0625"
+    }
+
+###
