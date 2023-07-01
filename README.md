@@ -132,6 +132,13 @@ sudo certbot renew --dry-run
 
 Replace `yourdomain.com` with your domain name. Follow the on-screen prompts, and certbot will automatically configure Nginx to use SSL with your new certificate.
 
+## Installing Network Solutions Cert on NGINX
+Ref: https://www.endpointdev.com/blog/2013/02/network-solutions-nginx-ssl-certificate-installation/
+
+```bash
+# Certs need line endings
+(cat SPI.CALLCENTERGROUP.NET.crt; echo; cat DV_USERTrustRSACertificationAuthority.crt; echo; cat DV_NetworkSolutionsDVServerCA2.crt; echo) > chained_SPI.CALLCENTERGROUP.NET.crt
+```
 
 ## API Key Authentication
 

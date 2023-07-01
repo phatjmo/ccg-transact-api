@@ -14,7 +14,7 @@ function routes(fastify, options, done) {
           creditCardNo: { type: 'string' },
           creditCardExp: { type: 'string' },
         },
-        required: ['phoneNo', 'accountNo', 'leadID', 'amount', 'creditCardNo', 'creditCardExp']
+        required: ['phoneNo', 'accountNo', 'leadID', 'creditCardNo', 'creditCardExp']
       }
     },
   }, async (request, reply) => {
@@ -57,7 +57,7 @@ function routes(fastify, options, done) {
           achRoutingNo: { type: 'string' },
           achAccountNo: { type: 'string' },
         },
-        required: ['phoneNo', 'accountNo', 'leadID', 'amount', 'achRoutingNo', 'achAccountNo']
+        required: ['phoneNo', 'accountNo', 'leadID', 'achRoutingNo', 'achAccountNo']
       }
     },
   }, async (request, reply) => {
