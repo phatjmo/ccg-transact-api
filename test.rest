@@ -6,11 +6,10 @@
 @baseUrl = {{$dotenv BASE_URL}}
 @apiKey = {{$dotenv API_KEY}}
 
-# POST with x-api-key header
+# POST CC with x-api-key header
 POST {{baseUrl}}/api/transactions/creditcard
 content-type: application/json
 x-api-key: {{apiKey}}
-
 
     {
         "phoneNo": "4805551212",
@@ -23,10 +22,9 @@ x-api-key: {{apiKey}}
 
 ###
 
-# POST with x-api-key querystring
+# POST CC with x-api-key querystring
 POST {{baseUrl}}/api/transactions/creditcard?x-api-key={{apiKey}}
 content-type: application/json
-
 
     {
         "phoneNo": "4805551212",
@@ -35,6 +33,35 @@ content-type: application/json
         "creditCardNo": "4532015112830366",
         "creditCardExp": "0625",
         "creditCardSec": "1111"
+    }
+
+###
+
+# POST ACH with x-api-key header
+POST {{baseUrl}}/api/transactions/ach
+content-type: application/json
+x-api-key: {{apiKey}}
+
+    {
+        "phoneNo": "4805551212",
+        "accountNo": "6112fd5867302f001e204701",
+        "leadID": "12345",
+        "achRoutingNo": "122100024",
+        "achAccountNo": "918709270"
+    }
+
+###
+
+# POST ACH with x-api-key querystring
+POST {{baseUrl}}/api/transactions/ach?x-api-key={{apiKey}}
+content-type: application/json
+
+    {
+        "phoneNo": "4805551212",
+        "accountNo": "6112fd5867302f001e204701",
+        "leadID": "12345",
+        "achRoutingNo": "122100024",
+        "achAccountNo": "918709270"
     }
 
 ###
