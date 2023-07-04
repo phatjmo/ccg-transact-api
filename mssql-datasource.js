@@ -32,7 +32,7 @@ const storeTransactACH = async (phoneNo, accountNo, leadID, achRoutingNo, achAcc
   const pool = await poolPromise;
   //let pool = await sql.connect(config)
   //let pool = await sql.connect(`Server=${server},1433;Database=${database};User Id=${user};Password=${password};Encrypt=true`)
-  
+  // dbo.TransactACH (@phone nvarchar(10),@account nvarchar(256),@leadid int,@achroute nvarchar(9),@achaccount nvarchar(17))
   return await pool.request()
     .input('phone', sql.NVarChar(10), phoneNo)
     .input('account', sql.NVarChar(256), accountNo)
@@ -42,14 +42,16 @@ const storeTransactACH = async (phoneNo, accountNo, leadID, achRoutingNo, achAcc
     .execute('dbo.TransactACH');
 }
 
-const storeTransactCC = async (phoneNo, accountNo, leadID, creditCardNo, creditCardExp) => {
+const storeTransactCC = async (phoneNo, accountNo, leadID, creditCardNo, creditCardExp, creditCardSec) => {
   const pool = await poolPromise;
+  // dbo.TransactCreditCard (@phone nvarchar(10),@account nvarchar(256),@leadid int,@ccnumber nvarchar(16),@ccexp nvarchar(4),@ccsec nvarchar(4))
   return await pool.request()
     .input('phone', sql.NVarChar(10), phoneNo)
     .input('account', sql.NVarChar(256), accountNo)
     .input('leadid', sql.Int, leadID)
     .input('ccnumber', sql.NVarChar(16), creditCardNo)
     .input('ccexp', sql.NVarChar(4), creditCardExp)
+    .input('ccsec', sql.NVarChar(4), creditCardSec)
     .execute('dbo.TransactCreditCard');
 }
 

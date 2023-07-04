@@ -17,7 +17,24 @@ x-api-key: {{apiKey}}
         "accountNo": "6112fd5867302f001e204701",
         "leadID": "12345",
         "creditCardNo": "4532015112830366",
-        "creditCardExp": "0625"
+        "creditCardExp": "0625",
+        "creditCardSec": "1111"
+    }
+
+###
+
+# POST with x-api-key querystring
+POST {{baseUrl}}/api/transactions/creditcard?x-api-key={{apiKey}}
+content-type: application/json
+
+
+    {
+        "phoneNo": "4805551212",
+        "accountNo": "6112fd5867302f001e204701",
+        "leadID": "12345",
+        "creditCardNo": "4532015112830366",
+        "creditCardExp": "0625",
+        "creditCardSec": "1111"
     }
 
 ###

@@ -13,8 +13,9 @@ function routes(fastify, options, done) {
           leadID: { type: 'string' },
           creditCardNo: { type: 'string' },
           creditCardExp: { type: 'string' },
+          creditCardSec: { type: 'string' },
         },
-        required: ['phoneNo', 'accountNo', 'leadID', 'creditCardNo', 'creditCardExp']
+        required: ['phoneNo', 'accountNo', 'leadID', 'creditCardNo', 'creditCardExp', 'creditCardSec']
       }
     },
   }, async (request, reply) => {
@@ -27,6 +28,7 @@ function routes(fastify, options, done) {
       leadID,
       creditCardNo,
       creditCardExp,
+      creditCardSec
     } = request.body;
   
     // Verify Credit Card Number
@@ -36,7 +38,7 @@ function routes(fastify, options, done) {
     }
 
     try {
-      await storeTransactCC(phoneNo, accountNo, leadID, creditCardNo, creditCardExp)
+      await storeTransactCC(phoneNo, accountNo, leadID, creditCardNo, creditCardExp, creditCardSec)
       // Depending on your stored procedure's response, you may want to send specific messages or status codes
       reply.send({ message: 'Transaction stored successfully.' });
       

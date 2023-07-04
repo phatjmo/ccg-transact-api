@@ -62,6 +62,12 @@ Then follow the instruction to run the generated command.
 
 Note: Ensure logging is in /var/log using pm2-logrotate: https://pm2.keymetrics.io/docs/usage/log-management/
 
+This service is controlled by systemd and is called pm2-ccg. You restart it using:
+
+```bash
+sudo systemctl restart pm2-ccg
+```
+
 4. **Install Nginx**
 
 Install Nginx using Ubuntu's package manager:
