@@ -65,3 +65,14 @@ content-type: application/json
     }
 
 ###
+
+# POST ACH with x-api-key querystring and data as querystring
+POST {{baseUrl}}/api/transactions/ach
+    ?x-api-key={{apiKey}}
+    &phoneNo=4805551212
+    &accountNo=6112fd5867302f001e204701
+    &leadId=12345
+    &achRoutingNo=122100024
+    &achAccountNo=918709270
+
+###
