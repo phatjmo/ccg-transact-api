@@ -76,3 +76,27 @@ GET {{baseUrl}}/api/transactions/ach
     &achAccountNo=918709270
 
 ###
+
+# GET CreditCard with x-api-key querystring and data as querystring
+GET {{baseUrl}}/api/transactions/creditcard
+    ?x-api-key={{apiKey}}
+    &phoneNo=4805551212
+    &accountNo=6112fd5867302f001e204701
+    &leadID=12345
+    &creditCardNo=4532015112830366
+    &creditCardExp=0625
+    &creditCardSec=1111
+
+###
+
+# GET CreditCard with x-api-key header and data as querystring
+GET {{baseUrl}}/api/transactions/creditcard
+    ?creditCardSec=1111
+    &creditCardNo=4532015112830366
+    &accountNo=6112fd5867302f001e204701
+    &creditCardExp=0625
+    &phoneNo=4805551212
+    &leadID=256106
+x-api-key: {{apiKey}}
+
+###
