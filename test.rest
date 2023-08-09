@@ -96,7 +96,7 @@ GET {{baseUrl}}/api/transactions/creditcard
     &accountNo=6112fd5867302f001e204701
     &creditCardExp=0625
     &phoneNo=4805551212
-    &leadID=256106
+    &leadID=256-1064713
 x-api-key: {{apiKey}}
 
 ###
