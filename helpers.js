@@ -62,8 +62,31 @@ const checkAPIKey = (request, reply) => {
    }
 }
 
+const isExpDateValid = (inputDate, currentDate = new Date()) => {
+  if(isNaN(inputDate)) return false
+  if(inputDate.length == 3) inputDate = `0${inputDate}`
+  // Extract the month and year from the input string MMYY
+  const inputMonth = parseInt(inputDate.substring(0, 2), 10);
+  const inputYear = parseInt("20" + inputDate.substring(2, 4), 10);
+
+  // Create a Date object for the input date
+  const inputDateObject = new Date(inputYear, inputMonth - 1);  // months are 0-based in JavaScript
+
+  // Create a Date object for the current date minus one month
+  currentDate.setMonth(currentDate.getMonth() - 1);
+
+  // Zero out the time portions to only compare the date
+  inputDateObject.setHours(0, 0, 0, 0);
+  currentDate.setHours(0, 0, 0, 0);
+
+  // Compare dates and return the boolean value
+  return inputDateObject >= currentDate;
+}
+
+
 module.exports = {
   validateCreditCardNumber,
   validateABARoutingNumber,
-  checkAPIKey
+  checkAPIKey,
+  isExpDateValid,
 }
