@@ -29,9 +29,11 @@ const creditCardRoute = async (requestPayload, reply) => {
     await storeTransactCC(phoneNo, accountNo, leadID, creditCardNo, creditCardExp, creditCardSec)
     // Depending on your stored procedure's response, you may want to send specific messages or status codes
     reply.send({ message: 'Transaction stored successfully.' });
+    return;
     
   } catch (err) {
     reply.code(500).send({ message: 'Internal Server Error', error: err });
+    return;
   }
 }
 
@@ -53,9 +55,11 @@ const achRoute = async (requestPayload, reply) => {
   try {
     await storeTransactACH(phoneNo, accountNo, leadID, achRoutingNo, achAccountNo)
     reply.send({ message: 'Transaction stored successfully.' });
+    return;
 
   } catch (err) {
     reply.code(500).send({ message: 'Internal Server Error', error: err });
+    return;
   }
 }
 
@@ -82,7 +86,7 @@ function routes(fastify, options, done) {
     checkAPIKey(request, reply)
     // Implementation of your route
     await creditCardRoute(request.query, reply)
-
+    return;
   });
   
   fastify.post('/api/transactions/creditcard', {
@@ -105,6 +109,7 @@ function routes(fastify, options, done) {
     checkAPIKey(request, reply)
     // Implementation of your route
     await creditCardRoute(request.body, reply)
+    return;
   });
 
   // ACH Transaction Routes
@@ -127,6 +132,7 @@ function routes(fastify, options, done) {
     checkAPIKey(request, reply)
     // Implementation of your route
     await achRoute(request.query, reply)
+    return;
   });
   
   fastify.post('/api/transactions/ach', {
@@ -148,6 +154,7 @@ function routes(fastify, options, done) {
     checkAPIKey(request, reply)
     // Implementation of your route
     await achRoute(request.body, reply)
+    return;
   });
 
   done();
