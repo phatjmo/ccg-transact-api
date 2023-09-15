@@ -26,9 +26,10 @@ const creditCardRoute = async (requestPayload, reply) => {
   }
 
   try {
-    await storeTransactCC(phoneNo, accountNo, leadID, creditCardNo, creditCardExp, creditCardSec)
+    const transactionId = await storeTransactCC(phoneNo, accountNo, leadID, creditCardNo, creditCardExp, creditCardSec)
     // Depending on your stored procedure's response, you may want to send specific messages or status codes
-    reply.send({ message: 'Transaction stored successfully.' });
+    console.log(`creditCardRoute - storeTransactCC returned ${transactionId}`)
+    reply.send({ message: 'Transaction stored successfully.', transactionId });
     return;
     
   } catch (err) {
@@ -53,8 +54,9 @@ const achRoute = async (requestPayload, reply) => {
   }
 
   try {
-    await storeTransactACH(phoneNo, accountNo, leadID, achRoutingNo, achAccountNo)
-    reply.send({ message: 'Transaction stored successfully.' });
+    const transactionId = await storeTransactACH(phoneNo, accountNo, leadID, achRoutingNo, achAccountNo)
+    console.log(`achRoute - storeTransactACH returned ${transactionId}`)
+    reply.send({ message: 'Transaction stored successfully.', transactionId });
     return;
 
   } catch (err) {
