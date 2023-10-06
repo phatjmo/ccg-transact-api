@@ -15,13 +15,15 @@ const creditCardRoute = async (requestPayload, reply) => {
 
   // Verify Exp Date
   if (!isExpDateValid(creditCardExp)) {
-    reply.code(400).send({ message: 'Invalid Expiration Date' });
+    console.warn(`${creditCardExp} is and Invalid Expiration Date`)
+    reply.code(200).send({ message: 'Invalid Expiration Date' });
     return;
   }
 
   // Verify Credit Card Number
   if (!validateCreditCardNumber(creditCardNo)) {
-    reply.code(400).send({ message: 'Invalid Credit Card Number' });
+    console.warn('Invalid Credit Card Number')
+    reply.code(200).send({ message: 'Invalid Credit Card Number' });
     return;
   }
 
@@ -33,7 +35,8 @@ const creditCardRoute = async (requestPayload, reply) => {
     return;
     
   } catch (err) {
-    reply.code(500).send({ message: 'Internal Server Error', error: err });
+    console.error('Request failed with: ', err)
+    reply.code(200).send({ message: 'Internal Server Error', error: err });
     return;
   }
 }
@@ -49,7 +52,8 @@ const achRoute = async (requestPayload, reply) => {
 
   // Verify routing Number
   if (!validateABARoutingNumber(achRoutingNo)) {
-    reply.code(400).send({ message: 'Invalid Routing Number' });
+    console.warn(`${achRoutingNo} is an Invalid Routing Number`)
+    reply.code(200).send({ message: 'Invalid Routing Number' });
     return;
   }
 
@@ -60,7 +64,8 @@ const achRoute = async (requestPayload, reply) => {
     return;
 
   } catch (err) {
-    reply.code(500).send({ message: 'Internal Server Error', error: err });
+    console.error('Request failed with: ', err)
+    reply.code(200).send({ message: 'Internal Server Error', error: err });
     return;
   }
 }
