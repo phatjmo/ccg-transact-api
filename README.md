@@ -194,3 +194,17 @@ Current releases should be in the main branch, so just pull the latest changes a
 ```bash
 git pull
 ```
+
+## Logging
+
+Logging should be pointed to /var/log using pm2-logrotate: https://pm2.keymetrics.io/docs/usage/log-management/. This should have been done on install but in case it wasn't, you can do it now.
+
+```bash
+pm2 set pm2-logrotate:retain 7
+```
+
+Logs can be viewed directly in pm2 with:
+
+```bash
+pm2 logs
+```
